@@ -1,38 +1,35 @@
-// app/actions.ts
+// app/actions.tsx
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client"; // <--- Import this
 import { revalidatePath } from "next/cache";
-import { Resend } from 'resend'; // <-- Import Resend
-import { ContactEmailTemplate } from '@/components/ContactEmailTemplate'; // <-- Import your new template
+import { Resend } from 'resend';
+import { ContactEmailTemplate } from '@/components/ContactEmailTemplate';
 
-// Initialize clients
-const prisma = new PrismaClient();
-const resend = new Resend(process.env.RESEND_API_KEY);
+const prisma = new PrismaClient(); // <--- Initialize this
 
 export async function submitContactForm(formData: FormData) {
-  // 1. Get form data
   const name = formData.get("name") as string;
   const email = formData.get("email") as string;
   const message = formData.get("message") as string;
 
-  // 2. Simple server-side validation
   if (!name || !email || !message) {
     return { success: false, error: "All fields are required." };
   }
 
-  // 3. Validate environment variables
+  const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.RESEND_TO_EMAIL;
-  if (!process.env.RESEND_API_KEY || !toEmail) {
+
+  if (!apiKey || !toEmail) {
     console.error("Missing Resend environment variables");
-    // This is a server configuration error, don't expose details to the client
     return { success: false, error: "Server configuration error." };
   }
 
-  // 4. Run both tasks in parallel
+  const resend = new Resend(apiKey);
+
   try {
     await Promise.all([
-      // Task 1: Save to database
+      // 1. Save to Vercel Postgres
       prisma.contactSubmission.create({
         data: {
           name,
@@ -41,25 +38,21 @@ export async function submitContactForm(formData: FormData) {
         },
       }),
       
-      // Task 2: Send email with Resend
+      // 2. Send Email
       resend.emails.send({
-        // NOTE: For testing, Resend allows 'onboarding@resend.dev'
-        // To use your own domain (e.g., 'no-reply@cacc-website.com'), 
-        // you must add and verify it in your Resend dashboard.
-        from: 'onboarding@resend.dev', 
+        from: 'website@caccconsultant.com', 
         to: toEmail,
         subject: `New CACC Website Message from ${name}`,
-        replyTo: email, // Set the reply-to to the user's email
+        replyTo: email, 
         react: <ContactEmailTemplate name={name} email={email} message={message} />,
       })
     ]);
 
-    // If both succeed:
     revalidatePath("/#contact");
+    revalidatePath("/admin");
     return { success: true, message: "Message sent successfully!" };
 
   } catch (error) {
-    // If either task fails:
     console.error("Form submission error:", error);
     return { success: false, error: "Something went wrong. Please try again." };
   }

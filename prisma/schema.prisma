@@ -5,8 +5,11 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  // Uses the connection pool for better performance
+  url = env("POSTGRES_PRISMA_URL")
+  // Uses direct connection for migrations
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model ContactSubmission {

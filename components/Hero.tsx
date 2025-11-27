@@ -20,7 +20,7 @@ export default function Hero() {
           href="#contact"
           className="inline-block rounded-md bg-[#00f7ff] px-8 py-3.5 font-semibold text-[#012b1d] transition-all hover:bg-white hover:text-[#0077b6]"
         >
-          Book a Free Consultation
+          Book a Consultation
         </Link>
       </div>
     </FadeInSection>

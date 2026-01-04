@@ -19,7 +19,7 @@
     "@react-email/render": "^2.0.0",
     "ai": "^5.0.104",
     "lucide-react": "^0.553.0",
-    "next": "^16.0.3",
+    "next": "16.0.10",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-intersection-observer": "^10.0.0",

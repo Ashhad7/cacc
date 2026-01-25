@@ -1,5 +1,5 @@
 // app/admin/page.tsx
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, ContactSubmission } from "@prisma/client";
 import { Mail, Calendar, User, MessageSquare, Clock } from "lucide-react";
 
 const prisma = new PrismaClient();
@@ -29,7 +29,7 @@ export default async function AdminPage() {
 
         {/* --- MOBILE VIEW: Cards (Visible on small screens only) --- */}
         <div className="grid gap-4 md:hidden">
-          {submissions.map((sub) => (
+          {submissions.map((sub: ContactSubmission) => (
             <div key={sub.id} className="rounded-xl border border-white/10 bg-white/5 p-5 shadow-lg backdrop-blur-sm">
               
               {/* Card Header: Name & Date */}
@@ -89,7 +89,7 @@ export default async function AdminPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-white/10">
-              {submissions.map((sub) => (
+              {submissions.map((sub: ContactSubmission) => (
                 <tr key={sub.id} className="hover:bg-white/5 transition-colors duration-200">
                   <td className="p-5 text-sm text-gray-300 whitespace-nowrap align-top">
                     <div className="flex items-center gap-2">

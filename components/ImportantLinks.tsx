@@ -1,8 +1,8 @@
 // components/ImportantLinks.tsx
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
+
 
 const links = [
   { name: "NAVTTC", href: "https://share.google/DD658pvpSnXznDO5E" },
@@ -36,54 +36,48 @@ const links = [
 ];
 
 export default function ImportantLinks() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
-  const [showLeftFade, setShowLeftFade] = useState(false);
-  const [showRightFade, setShowRightFade] = useState(true);
-
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
-    const maxScroll = scrollWidth - clientWidth;
-    
-    // Update Progress Bar
-    const scrollPercent = (scrollLeft / maxScroll) * 100;
-    setProgress(scrollPercent);
-
-    // Update Fades
-    setShowLeftFade(scrollLeft > 10);
-    setShowRightFade(scrollLeft < maxScroll - 10);
-  };
-
-  const scrollBy = (amount: number) => {
-    containerRef.current?.scrollBy({ left: amount, behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    const container = containerRef.current;
-    container?.addEventListener("scroll", handleScroll);
-    
-    // Initial check
-    handleScroll(); 
-
-    return () => {
-      container?.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const [isPaused, setIsPaused] = useState(false);
 
   return (
-    <section id="important-links" className="mx-auto mt-20 max-w-6xl rounded-2xl from-brand-green/80 to-brand-teal/80 p-10 shadow-2xl">
-      <h2 className="mb-8 text-center text-3xl font-semibold text-brand-cyan">Important Links</h2>
+    <section className="mx-auto mt-20 max-w-6xl rounded-2xl from-brand-green/80 to-brand-teal/80 p-10 shadow-2xl overflow-hidden">
+      {/* 1. CSS Animation Definition 
+        We define this inline so it works immediately without editing your tailwind.config.js 
+      */}
+      <style jsx>{`
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+          display: flex;
+          width: max-content;
+          animation: scroll 40s linear infinite;
+        }
+        .paused {
+          animation-play-state: paused;
+        }
+      `}</style>
 
-      <div className="relative flex items-center">
-        {/* Left Fade */}
-        <div className={`pointer-events-none absolute left-0 top-0 z-10 h-full w-20 from-brand-green/80 to-transparent transition-opacity ${showLeftFade ? 'opacity-100' : 'opacity-0'}`} />
+      <h2 className="mb-8 text-center text-3xl font-semibold text-brand-cyan">
+        Important Links
+      </h2>
 
-        {/* Scroll Container */}
-        <div ref={containerRef} className="links-container flex gap-4 overflow-x-auto px-2 py-3">
-          {links.map((link) => (
+      <div 
+        className="relative flex items-center overflow-hidden"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {/* Left Fade Overlay */}
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-linear-to-r from-brand-green/80 to-transparent" />
+
+        {/* 2. The Moving Container 
+            We map links TWICE so the animation is seamless. 
+            When the first set finishes, the second set is exactly where the first started.
+        */}
+        <div className={`animate-scroll flex gap-4 px-2 py-3 ${isPaused ? 'paused' : ''}`}>
+          {[...links, ...links].map((link, index) => (
             <a
-              key={link.name}
+              key={`${link.name}-${index}`}
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
@@ -94,32 +88,8 @@ export default function ImportantLinks() {
           ))}
         </div>
 
-        {/* Right Fade */}
-        <div className={`pointer-events-none absolute right-0 top-0 z-10 h-full w-20 from-brand-green/80 to-transparent transition-opacity ${showRightFade ? 'opacity-100' : 'opacity-0'}`} />
-
-        {/* Scroll Buttons */}
-        <button
-          onClick={() => scrollBy(-300)}
-          className="absolute -left-5 z-20 hidden h-10 w-10 items-center justify-center rounded-full border border-brand-cyan/40 bg-brand-cyan/20 text-brand-cyan transition-all hover:scale-110 hover:bg-brand-cyan/30 md:flex"
-          aria-label="Scroll left"
-        >
-          <ChevronLeft />
-        </button>
-        <button
-          onClick={() => scrollBy(300)}
-          className="absolute -right-5 z-20 hidden h-10 w-10 items-center justify-center rounded-full border border-brand-cyan/40 bg-brand-cyan/20 text-brand-cyan transition-all hover:scale-110 hover:bg-brand-cyan/30 md:flex"
-          aria-label="Scroll right"
-        >
-          <ChevronRight />
-        </button>
-      </div>
-
-      {/* Progress Bar */}
-      <div className="mx-auto mt-6 h-1.5 w-full max-w-4xl rounded-full bg-white/10">
-        <div
-          className="h-full rounded-full from-brand-cyan to-cyan-300 shadow-lg shadow-brand-cyan/50"
-          style={{ width: `${progress}%`, transition: "width 0.1s linear" }}
-        />
+        {/* Right Fade Overlay */}
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-linear-to-l from-brand-green/80 to-transparent" />
       </div>
     </section>
   );

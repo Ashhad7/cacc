@@ -33,6 +33,9 @@ const links = [
   { name: "BIEK (Intermediate Board)", href: "https://share.google/Ztw3EqV591IQdKFuk" },
   { name: "TESDA Manila", href: "https://share.google/TsePWXHvqZItuJuz0" },
   { name: "IBA Karachi", href: "https://share.google/r6tuMJLZvXlP1F8PM" },
+  { name: "Technical University of Civil Engineering (Bucharest)", href:"utcb.ro/en"},
+  { name: "Ion Mincu University of Architecture and Urbanism", href:"uauim.ro/en"},
+  { name: "Technical University of Cluj-Napoca", href:"utcluj.ro/en"},
 ];
 
 export default function ImportantLinks() {

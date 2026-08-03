@@ -6,6 +6,7 @@ import ImportantLinks from "@/components/ImportantLinks";
 import Services from "@/components/Services";
 import Contact from "@/components/Contact";
 import Mission from "@/components/Mission";
+import Gallery from "@/components/Gallery";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <VisionMission />
       <ImportantLinks />
       <Services />
+      <Gallery />
       <Contact />
     </div>
   );

@@ -125,6 +125,15 @@ export const galleryItems: GalleryItem[] = [
     caption: "Multi-country scholarships 2027",
   },
 
+  {
+    id: "photo-42",
+    kind: "image",
+    category: "Scholarships",
+    src: "/gallery/photo-42.jpg",
+    alt: "Global Leadership Dialogue 2027 in Budapest, Hungary, an international leadership, networking and policy forum for Pakistani students, young professionals and researchers",
+    caption: "Global Leadership Dialogue 2027, Budapest",
+  },
+
   // Study Destinations
   {
     id: "photo-32",
@@ -192,6 +201,23 @@ export const galleryItems: GalleryItem[] = [
     caption: "Education in Europe within reach",
   },
 
+  {
+    id: "photo-43",
+    kind: "image",
+    category: "Study Destinations",
+    src: "/gallery/photo-43.jpg",
+    alt: "Guide to studying MBBS in China for the 2027 intake at Hubei University of Medicine, covering eligibility, English medium teaching and the application timeline",
+    caption: "MBBS in China, 2027 intake",
+  },
+  {
+    id: "photo-44",
+    kind: "image",
+    category: "Study Destinations",
+    src: "/gallery/photo-44.jpg",
+    alt: "Further education in Europe and the Schengen region for Pakistani MBBS doctors, covering Master's programmes, specialisation and residency routes, and short clinical courses",
+    caption: "Europe pathways for MBBS doctors",
+  },
+
   // Guidance & Advice
   {
     id: "photo-34",
@@ -242,6 +268,23 @@ export const galleryItems: GalleryItem[] = [
     caption: "English-taught medical universities in Italy",
   },
 
+  {
+    id: "photo-41",
+    kind: "image",
+    category: "Guidance & Advice",
+    src: "/gallery/photo-41.jpg",
+    alt: "Qurtuba University of Science and Information Technology admissions for Fall 2026, a five year Pharm-D Doctor of Pharmacy programme in Peshawar and Dera Ismail Khan",
+    caption: "Qurtuba University Pharm-D, Fall 2026",
+  },
+  {
+    id: "photo-46",
+    kind: "image",
+    category: "Guidance & Advice",
+    src: "/gallery/photo-46.jpg",
+    alt: "Guide to the GRE for Pakistani students, covering test structure, sections, scoring, validity, approximate fees and test centres in Karachi, Lahore and Islamabad",
+    caption: "GRE: structure, scoring and test centres",
+  },
+
   //Our Services
   {
     id: "photo-08",
@@ -276,6 +319,15 @@ export const galleryItems: GalleryItem[] = [
     caption: "Foreign university admissions",
   },
 
+  {
+    id: "photo-47",
+    kind: "image",
+    category: "Our Services",
+    src: "/gallery/photo-47.jpg",
+    alt: "CACC Pakistan free consultation for MBBS admissions through IMAT 2027 in Italy, with regional representatives listed for Sindh, Balochistan, KPK and Punjab",
+    caption: "Free consultation for IMAT 2027, Italy",
+  },
+
   //Motivation
   {
     id: "photo-10",
@@ -292,5 +344,13 @@ export const galleryItems: GalleryItem[] = [
     src: "/gallery/photo-14.jpg",
     alt: "Motivational quote attributed to Albert Einstein: once you stop learning, you start dying",
     caption: "On lifelong learning",
+  },
+  {
+    id: "photo-45",
+    kind: "image",
+    category: "Motivation",
+    src: "/gallery/photo-45.jpg",
+    alt: "CACC Pakistan tribute to teachers on World Teachers' Day, recognising their work in shaping minds and building the future",
+    caption: "World Teachers' Day tribute",
   },
 ];
